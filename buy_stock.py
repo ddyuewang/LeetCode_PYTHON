@@ -68,3 +68,55 @@ class Solution_3(object):
             for i in range(0, n):
                 max_profit = max(max_profit, f[i] + g[i])
             return max_profit
+
+## at most k times
+
+class Solution_4(object):
+    def maxProfit(self, k, prices):
+        """
+        :type k: int
+        :type prices: List[int]
+        :rtype: int
+        THE FOLLOWING IS being referenced
+        http://bookshadow.com/weblog/2015/02/18/leetcode-best-time-to-buy-and-sell-stock-iv/
+        """
+
+        size = len(prices)
+        if k > size/2:
+            profit = 0
+            # case where k is too big
+            for i in range(1,size):
+                profit += prices[i] - prices[i-1] if prices[i] - prices[i-1] > 0 else 0
+            return profit
+        else:
+            # case where k is reasonably small
+            dp = [None] * (2*k + 1)
+            dp[0] = 0
+
+            for i in range(size):
+                for j in range(min(2*k,i+1), 0, -1):
+                    dp[j] = max(dp[j], dp[j-1] + prices[i] * [1, -1][j % 2])
+
+            return max(dp)
+
+## case where there is a cool down of 1 day
+class Solution_5(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        size = len(prices)
+        if size < 2:
+            return 0
+        buys = [None] * size
+        sells = [None] * size
+        buys[0] = -prices[0]
+        buys[1] = max(-prices[0], -prices[1])
+        sells[0] = 0
+        sells[1] = max(0, prices[1] - prices[0])
+
+        for x in range(2, size):
+            sells[x] = max(sells[x - 1], buys[x - 1] + prices[x])
+            buys[x] = max(buys[x - 1], sells[x - 2] - prices[x])
+        return sells[-1]
