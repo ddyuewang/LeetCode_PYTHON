@@ -103,3 +103,54 @@ class Solution(object):
                 ### input  [10,1,2,7,6,1,5]  # 8
                 ### output [[1,1,6],[1,2,5],[1,7],[1,2,5],[1,7],[2,6]]
                 ### [1,2,5] comes from the 1st one and 2nd one respectively, without a flag wont be able to differently
+
+### letter combination of phone number
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+
+        Solution.res = []
+        # Solution.list_letter  = ["", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        tmp = ''
+        if len(digits) == 0:
+            return []
+        self.dfs(digits,tmp,0)
+        return Solution.res
+
+    def dfs(self, digits, tmp, level, list_letter = ["", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]):
+        num = len(digits)
+        if(level != num):
+            # for i in range(level, num):
+            for j in list_letter[int(digits[level])]:
+                self.dfs(digits, tmp+j, level+1)
+        else:
+            Solution.res.append(tmp)
+
+
+### combination sum III
+class Solution(object):
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        Solution.res = []
+        tmp = []
+        self.dfs(k,n,tmp,1)
+        return Solution.res
+
+    def dfs(self, k, n, tmp, level):
+        if n < 0:
+            return
+        if len(tmp) == k and n < 0:
+            return
+        if len(tmp) == k and n == 0:
+            Solution.res.append(tmp[:])
+        for i in range(level,9+1):
+            tmp.append(i)
+            self.dfs(k, n-i, tmp, i+1)
+            tmp.pop()
