@@ -17,7 +17,6 @@ class Solution_1(object):
             return profit
 
 ## BUY stock version 2 - as many as you want
-
 class Solution_2(object):
     def maxProfit(self, prices):
         """
@@ -33,7 +32,6 @@ class Solution_2(object):
             return profit
 
 ## BUY stock version 3 - at most 2 transactions
-
 class Solution_3(object):
     def maxProfit(self, prices):
         """
@@ -70,7 +68,6 @@ class Solution_3(object):
             return max_profit
 
 ## at most k times
-
 class Solution_4(object):
     def maxProfit(self, k, prices):
         """
